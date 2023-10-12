@@ -11895,11 +11895,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\trank\\Desktop\\Folder\\BackendApp\\BackendApp.csproj",
+      "projectUniqueName": "C:\\Users\\trank\\Desktop\\New folder\\ApiDoAn\\BackendApp\\BackendApp.csproj",
       "projectName": "BackendApp",
-      "projectPath": "C:\\Users\\trank\\Desktop\\Folder\\BackendApp\\BackendApp.csproj",
+      "projectPath": "C:\\Users\\trank\\Desktop\\New folder\\ApiDoAn\\BackendApp\\BackendApp.csproj",
       "packagesPath": "C:\\Users\\trank\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\trank\\Desktop\\Folder\\BackendApp\\obj\\",
+      "outputPath": "C:\\Users\\trank\\Desktop\\New folder\\ApiDoAn\\BackendApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\trank\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,5 +1,7 @@
 ﻿using BackendApp.DbContexts;
 using BackendApp.Dtos;
+using BackendApp.Dtos.Common;
+using BackendApp.Dtos.Items;
 using BackendApp.Entities;
 using BackendApp.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +24,7 @@ namespace BackendApp.Services.Implements
                 Name = input.Name,
                 Price = input.Price,
                 Description = input.Description,
+                Category = input.Category,
                 ImageUrl = input.ImageUrl,
                 
             });
@@ -41,26 +44,14 @@ namespace BackendApp.Services.Implements
 
         public List<Item> GetAll()
         {
-            /*var results = new List<Item>();
-            foreach (var item in _dbContext.Items)
-            {
-                results.Add(new Item
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Price = item.Price,
-                    Description = item.Description,
-                    ImageUrl = item.ImageUrl,
-                });
-            }
-            return results;*/
+            var result = _dbContext.Items.OrderByDescending(i => i.Name).ToList();
 
-            var results = _dbContext.Items.OrderByDescending(i => i.Name).ToList();
-            if (results.Count == 0) 
+            if (result.Count == 0)
             {
                 throw new Exception("Không có thông tin");
             }
-            return results;
+            return result;
+            
         }
 
         public Item GetById(int id)
@@ -75,34 +66,10 @@ namespace BackendApp.Services.Implements
                 Id = item.Id,
                 Name = item.Name,
                 Price = item.Price,
+                Category = item.Category,
                 Description = item.Description,
                 ImageUrl = item.ImageUrl,
             };
-        }
-
-        public List<Item> SearchItem(KeywordDto input)
-        {
-            var results = new List<Item>();
-            var query = _dbContext.Items.Where(i => (i.Name.Contains(input.Keyword)))
-                                        .OrderBy(i => i.Price)
-                                        .ThenByDescending(i => i.Id).ToList();
-            if(query.Count == 0)
-            {
-                throw new Exception("Không tìm thấy thông tin sản phẩm");
-            }
-
-            foreach (var item in query)
-            {
-                results.Add(new Item
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Price = item.Price,
-                    Description = item.Description,
-                    ImageUrl = item.ImageUrl,
-                });
-            }
-            return results;
         }
 
         public void UpdateItem(Item input)
@@ -115,6 +82,7 @@ namespace BackendApp.Services.Implements
             item.Name = input.Name;
             item.Price = input.Price;
             item.Description = input.Description;
+            item.Category = input.Category;
             item.ImageUrl = input.ImageUrl;
             _dbContext.SaveChanges();
         }

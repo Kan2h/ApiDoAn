@@ -1,4 +1,4 @@
-﻿namespace BackendApp.Dtos
+﻿namespace BackendApp.Dtos.Users
 {
     public class UserDto
     {

@@ -1,5 +1,6 @@
 ﻿using BackendApp.DbContexts;
 using BackendApp.Dtos;
+using BackendApp.Dtos.Users;
 using BackendApp.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

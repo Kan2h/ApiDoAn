@@ -1,4 +1,4 @@
-﻿using BackendApp.Dtos;
+﻿using BackendApp.Dtos.Favorites;
 using BackendApp.Dtos.Items;
 using BackendApp.Entities;
 using BackendApp.Services.Interfaces;
@@ -10,21 +10,21 @@ namespace BackendApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemsController : ControllerBase
+    public class FavoriteController : ControllerBase
     {
-        private readonly IItemService _itemService;
+        private readonly IFavoriteService _favoriteService;
 
-        public ItemsController(IItemService ItemService)
+        public FavoriteController(IFavoriteService FavoriteService)
         {
-            _itemService = ItemService;
+            _favoriteService = FavoriteService;
         }
 
         [HttpPost("create")]
-        public IActionResult Create(ItemDto input)
+        public IActionResult Create(FavoriteDto input)
         {
             try
             {
-                _itemService.CreateItem(input);
+                _favoriteService.AddFavorite(input);
                 return Ok();
             }
             catch (Exception e)
@@ -32,13 +32,13 @@ namespace BackendApp.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
             }
         }
-        
+
         [HttpPut("update")]
-        public IActionResult Update(Item input)
+        public IActionResult Update(FavoriteDto input)
         {
             try
             {
-                _itemService.UpdateItem(input);
+                _favoriteService.UpdateFavorite(input);
                 return Ok();
             }
             catch (Exception e)
@@ -46,37 +46,27 @@ namespace BackendApp.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
             }
         }
-        [HttpGet("get-all")]
-        public IActionResult GetAll()
-        {
-            try
-            {
-                return Ok(_itemService.GetAll());
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
-            }
-        }
-        [HttpGet("get-by-id/{id}")]
-        public IActionResult GetById([Range(1, int.MaxValue, ErrorMessage = "Id phải lớn hơn 0")] int id)
-        {
-            try
-            {
-                return Ok(_itemService.GetById(id));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
-            }
-        }
+
         [HttpDelete("delete")]
-        public IActionResult DeleteUser([Range(1, int.MaxValue, ErrorMessage = "Id phải lớn hơn 0")] int id)
+        public IActionResult Delete([Range(1, int.MaxValue, ErrorMessage = "Id phải lớn hơn 0")] int id)
         {
             try
             {
-                _itemService.DeleteItem(id);
+                _favoriteService.DeleteFavorite(id);
                 return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
+            }
+        }
+
+        [HttpGet("get-all")]
+        public IActionResult GetAll(int id)
+        {
+            try
+            {
+                return Ok(_favoriteService.GetAllFavorite(id));
             }
             catch (Exception e)
             {

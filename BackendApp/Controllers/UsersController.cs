@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendApp.DbContexts;
 using BackendApp.Entities;
-using BackendApp.Dtos;
 using BackendApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
+using BackendApp.Dtos.Users;
+using BackendApp.Dtos.Common;
+using BackendApp.Services.Implements;
 
 namespace BackendApp.Controllers
 {
@@ -94,6 +96,30 @@ namespace BackendApp.Controllers
             {
                 _userService.Delete(id);
                 return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
+            }
+        }
+        [HttpGet("{id}/get-all-item")]
+        public IActionResult GetAllItem(int id)
+        {
+            try
+            {
+                return Ok(_userService.GetAllItem(id));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
+            }
+        }
+        [HttpGet("{id}/get-all-favorite-item")]
+        public IActionResult GetAllFavoriteItem(int id)
+        {
+            try
+            {
+                return Ok(_userService.GetAllFavorite(id));
             }
             catch (Exception e)
             {

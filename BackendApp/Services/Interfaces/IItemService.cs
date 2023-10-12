@@ -1,4 +1,6 @@
 ﻿using BackendApp.Dtos;
+using BackendApp.Dtos.Common;
+using BackendApp.Dtos.Items;
 using BackendApp.Entities;
 
 namespace BackendApp.Services.Interfaces
@@ -10,6 +12,5 @@ namespace BackendApp.Services.Interfaces
         void UpdateItem(Item input);
         Item GetById(int id);
         void DeleteItem(int id);
-        List<Item> SearchItem(KeywordDto input);
     }
 }

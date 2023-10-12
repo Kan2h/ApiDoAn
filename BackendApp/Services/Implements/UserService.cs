@@ -1,5 +1,6 @@
 ﻿using BackendApp.DbContexts;
-using BackendApp.Dtos;
+using BackendApp.Dtos.Items;
+using BackendApp.Dtos.Users;
 using BackendApp.Entities;
 using BackendApp.Services.Interfaces;
 using System;
@@ -92,6 +93,45 @@ namespace BackendApp.Services.Implements
                 Email = user.Email,
                 Password = user.Password,
             };
+        }
+        public List<FavoriteItemDto> GetAllFavorite(int id)
+        {
+            var query = from f in _dbContext.Favorites
+                        join i in _dbContext.Items on f.ItemId equals i.Id
+                        where f.UserId == id
+                        where f.IsFavorite == true
+                        select new FavoriteItemDto
+                        {
+                            Id = i.Id,
+                            Name = i.Name,
+                            Category = i.Category,
+                            Description = i.Description,
+                            Price = i.Price,
+                            ImageUrl = i.ImageUrl,
+                            IsFavorite = f.IsFavorite
+                        };
+            var result = query.ToList();
+            return result;
+
+        }
+        public List<FavoriteItemDto> GetAllItem(int id)
+        {
+            var query = from i in _dbContext.Items
+                        join f in _dbContext.Favorites on i.Id equals f.ItemId into Details
+                        from val in Details.DefaultIfEmpty()
+                        select new FavoriteItemDto
+                        {
+                            Id = i.Id,
+                            Name = i.Name,
+                            Category = i.Category,
+                            Description = i.Description,
+                            Price = i.Price,
+                            ImageUrl = i.ImageUrl,
+                            IsFavorite = (val.IsFavorite != null) ? val.IsFavorite : false                       
+                        };
+            var result = query.ToList();
+            return result;
+
         }
     }
 }

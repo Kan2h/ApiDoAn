@@ -40,6 +40,8 @@ namespace BackendApp
             });
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IItemService, ItemService>();
+            builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+
 
             builder.Services.AddCors(options =>
             {
