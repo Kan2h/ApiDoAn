@@ -1,9 +1,11 @@
 ﻿using BackendApp.DbContexts;
+using BackendApp.Dtos.Common;
 using BackendApp.Dtos.Items;
 using BackendApp.Dtos.Users;
 using BackendApp.Entities;
 using BackendApp.Services.Interfaces;
 using System;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BackendApp.Services.Implements
 {
@@ -37,13 +39,14 @@ namespace BackendApp.Services.Implements
             _dbContext.SaveChanges();
         }
 
-        public List<UserDto> GetAll()
+        public List<User> GetAll()
         {
-            var results = new List<UserDto>();
+            var results = new List<User>();
             foreach (var user in _dbContext.Users)
             {
-                results.Add(new UserDto
+                results.Add(new User
                 {
+                    Id = user.Id,
                     Name = user.Name,
                     Email = user.Email,
                     Password = user.Password,
@@ -80,15 +83,16 @@ namespace BackendApp.Services.Implements
             _dbContext.SaveChanges();
         }
 
-        public UserDto Login(RequestDto input)
+        public User Login(RequestDto input)
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == input.Email && u.Password == input.Password);
             if (user == null)
             {
                 throw new Exception("Không tìm thấy thông tin người dùng");
             }
-            return new UserDto
+            return new User
             {
+                Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
                 Password = user.Password,
@@ -116,9 +120,53 @@ namespace BackendApp.Services.Implements
         }
         public List<FavoriteItemDto> GetAllItem(int id)
         {
-            var query = from i in _dbContext.Items
+            var results = new List<FavoriteItemDto>();
+
+            foreach (var i in _dbContext.Items)
+            {
+                var query = _dbContext.Favorites.FirstOrDefault(f => f.UserId == id && f.ItemId == i.Id);
+                results.Add(new FavoriteItemDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Category= i.Category,
+                    Description = i.Description,
+                    Price = i.Price,
+                    ImageUrl = i.ImageUrl,
+                    IsFavorite = (query != null) ? query.IsFavorite : false,
+                });
+            }
+            return results;
+
+        }
+        
+        public List<FavoriteItemDto> SearchItem(KeywordDto input, int id)
+        {
+            var results = new List<FavoriteItemDto>();
+
+            foreach (var i in _dbContext.Items)
+            {
+                if ( i.Name.Contains(input.Keyword))
+                {
+                    var query = _dbContext.Favorites.FirstOrDefault(f => f.UserId == id && f.ItemId == i.Id);
+                    results.Add(new FavoriteItemDto
+                    {
+                        Id = i.Id,
+                        Name = i.Name,
+                        Category = i.Category,
+                        Description = i.Description,
+                        Price = i.Price,
+                        ImageUrl = i.ImageUrl,
+                        IsFavorite = (query != null) ? query.IsFavorite : false,
+                    });
+                }
+            }
+            return results;
+
+            /*var query = from i in _dbContext.Items
                         join f in _dbContext.Favorites on i.Id equals f.ItemId into Details
                         from val in Details.DefaultIfEmpty()
+                        where i.Name.Contains(input.Keyword)
                         select new FavoriteItemDto
                         {
                             Id = i.Id,
@@ -127,11 +175,10 @@ namespace BackendApp.Services.Implements
                             Description = i.Description,
                             Price = i.Price,
                             ImageUrl = i.ImageUrl,
-                            IsFavorite = (val.IsFavorite != null) ? val.IsFavorite : false                       
+                            IsFavorite = (val.IsFavorite != null) ? val.IsFavorite : false
                         };
             var result = query.ToList();
-            return result;
-
+            return result.ToList();*/
         }
     }
 }

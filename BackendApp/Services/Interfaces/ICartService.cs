@@ -9,7 +9,7 @@ namespace BackendApp.Services.Interfaces
         void AddToCart(CartDto input);
         void UpdateCart(UpdateCartDto input);
         void SubmitCart(int id);
-        void DeleteCart(CartDto input);
+        void DeleteCart(DeleteCartDto input);
         List<CartItemDto> GetAllItem(int id);
     }
 }

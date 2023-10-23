@@ -8,7 +8,7 @@ namespace BackendApp.Services.Interfaces
     public interface IItemService
     {
         List<Item> GetAll();
-        void CreateItem(ItemDto input);
+        void CreateItem(CreateItemDto input);
         void UpdateItem(Item input);
         Item GetById(int id);
         void DeleteItem(int id);

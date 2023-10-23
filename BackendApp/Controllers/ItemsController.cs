@@ -20,7 +20,7 @@ namespace BackendApp.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult Create(ItemDto input)
+        public IActionResult Create(CreateItemDto input)
         {
             try
             {

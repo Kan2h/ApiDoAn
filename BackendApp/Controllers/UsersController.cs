@@ -126,5 +126,18 @@ namespace BackendApp.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
             }
         }
+
+        [HttpPost("{id}/search-item")]
+        public IActionResult SearchItem(KeywordDto input, int id)
+        {
+            try
+            {
+                return Ok(_userService.SearchItem(input, id));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
+            }
+        }
     }
 }

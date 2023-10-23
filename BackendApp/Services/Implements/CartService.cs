@@ -32,14 +32,14 @@ namespace BackendApp.Services.Implements
             var cartItem = _dbContext.Carts.FirstOrDefault(c => (c.ItemId == input.ItemId && c.UserId == input.UserId));
             if (cartItem != null)
             {
-                cartItem.Quantity++;
+                cartItem.Quantity = cartItem.Quantity + input.Count;
             } else
             {
                 _dbContext.Carts.Add(new Cart
                 {
                     ItemId = input.ItemId,
                     UserId = input.UserId,
-                    Quantity = 1 
+                    Quantity = input.Count
                 });
                 _dbContext.SaveChanges();
             }
@@ -67,7 +67,7 @@ namespace BackendApp.Services.Implements
             _dbContext.SaveChanges();
         }
 
-        public void DeleteCart(CartDto input)
+        public void DeleteCart(DeleteCartDto input)
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.Id == input.UserId);
             if (user == null)
@@ -163,7 +163,7 @@ namespace BackendApp.Services.Implements
         private string RandStr()
         {
             Random rand = new Random();
-            String key = "abcdefghijklmnopqrstuvwxyz";
+            String key = "abcdefghijklmnopqrstuvwxyz0123456789";
             int size = 10;
             String str = "";
 

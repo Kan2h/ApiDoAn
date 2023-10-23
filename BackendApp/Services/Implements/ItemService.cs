@@ -17,7 +17,7 @@ namespace BackendApp.Services.Implements
             _dbContext = dbContext;
         }
 
-        public void CreateItem(ItemDto input)
+        public void CreateItem(CreateItemDto input)
         {
             _dbContext.Items.Add(new Item
             {

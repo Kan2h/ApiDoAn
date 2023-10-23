@@ -1,18 +1,20 @@
-﻿using BackendApp.Dtos.Items;
+﻿using BackendApp.Dtos.Common;
+using BackendApp.Dtos.Items;
 using BackendApp.Dtos.Users;
+using BackendApp.Entities;
 
 namespace BackendApp.Services.Interfaces
 {
     public interface IUserService
     {
-        List<UserDto> GetAll();
+        List<User> GetAll();
         void CreateUser(UserDto input);
         void UpdateUser(int id, UserDto input);
         UserDto GetById(int id);
         void Delete(int id);
         List<FavoriteItemDto> GetAllFavorite(int id);
         List<FavoriteItemDto> GetAllItem(int id);
-
-        UserDto Login(RequestDto input);
+        List<FavoriteItemDto> SearchItem(KeywordDto input, int id);
+        User Login(RequestDto input);
     }
 }

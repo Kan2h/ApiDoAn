@@ -1,9 +1,8 @@
 ﻿namespace BackendApp.Dtos.Carts
 {
-    public class CartDto
+    public class DeleteCartDto
     {
         public int UserId { get; set; }
         public int ItemId { get; set; }
-        public int Count {  get; set; }
     }
 }
