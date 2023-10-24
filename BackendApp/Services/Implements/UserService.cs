@@ -17,13 +17,14 @@ namespace BackendApp.Services.Implements
             _dbContext = dbContext;
         }
 
-        public void CreateUser(UserDto input)
+        public void CreateUser(CreateUserDto input)
         {
             _dbContext.Users.Add(new User
             {
                 Name = input.Name,
                 Email = input.Email,
                 Password = input.Password,
+                Role = input.Role,
             });
             _dbContext.SaveChanges();
         }
@@ -55,22 +56,24 @@ namespace BackendApp.Services.Implements
             return results;
         }
 
-        public UserDto GetById(int id)
+        public User GetById(int id)
         {
             var user = _dbContext.Users.FirstOrDefault(e => e.Id == id);
             if (user == null)
             {
                 throw new Exception("Không tìm thấy thông tin người dùng");
             }
-            return new UserDto
+            return new User
             {
+                Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
                 Password = user.Password,
+                Role = user.Role,
             };
         }
 
-        public void UpdateUser(int id, UserDto input)
+        public void UpdateUser(int id, UpdateUserDto input)
         {
             var user = _dbContext.Users.FirstOrDefault(o => o.Id == id);
             if (user == null)
@@ -96,6 +99,7 @@ namespace BackendApp.Services.Implements
                 Name = user.Name,
                 Email = user.Email,
                 Password = user.Password,
+                Role = user.Role,
             };
         }
         public List<FavoriteItemDto> GetAllFavorite(int id)

@@ -28,7 +28,7 @@ namespace BackendApp.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult Create(UserDto input)
+        public IActionResult Create(CreateUserDto input)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace BackendApp.Controllers
             }
         }
         [HttpPut("update")]
-        public IActionResult Update(int id, UserDto input)
+        public IActionResult Update(int id, UpdateUserDto input)
         {
             try
             {
