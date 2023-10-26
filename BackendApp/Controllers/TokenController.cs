@@ -53,6 +53,7 @@ namespace BackendApp.Controllers
                     return Ok(new ResponseDto
                     {
                         Id = user.Id,
+                        Role = user.Role,
                         Token = new JwtSecurityTokenHandler().WriteToken(token)
                     });
                 }

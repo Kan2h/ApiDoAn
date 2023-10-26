@@ -51,6 +51,7 @@ namespace BackendApp.Services.Implements
                     Name = user.Name,
                     Email = user.Email,
                     Password = user.Password,
+                    Role = user.Role,
                 });
             }
             return results;

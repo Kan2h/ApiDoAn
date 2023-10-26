@@ -27,6 +27,7 @@ namespace BackendApp.Controllers
             _userService = UserService;
         }
 
+        [AllowAnonymous]
         [HttpPost("create")]
         public IActionResult Create(CreateUserDto input)
         {
@@ -40,6 +41,8 @@ namespace BackendApp.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
             }
         }
+
+        [Authorize]
         [HttpPost("login")]
         public IActionResult Login(RequestDto input)
         {
@@ -52,6 +55,8 @@ namespace BackendApp.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
             }
         }
+
+        [Authorize]
         [HttpPut("update")]
         public IActionResult Update(int id, UpdateUserDto input)
         {
