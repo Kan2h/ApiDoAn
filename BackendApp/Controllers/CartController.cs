@@ -47,7 +47,7 @@ namespace BackendApp.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete(DeleteCartDto input)
+        public IActionResult Delete([FromQuery] DeleteCartDto input)
         {
             try
             {
