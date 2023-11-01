@@ -33,7 +33,8 @@ namespace BackendApp.Services.Implements
             if (cartItem != null)
             {
                 cartItem.Quantity = cartItem.Quantity + input.Count;
-            } else
+            }
+            else
             {
                 _dbContext.Carts.Add(new Cart
                 {
@@ -41,8 +42,8 @@ namespace BackendApp.Services.Implements
                     UserId = input.UserId,
                     Quantity = input.Count
                 });
-                _dbContext.SaveChanges();
             }
+            _dbContext.SaveChanges();
         }
         public void UpdateCart(UpdateCartDto input)
         {
