@@ -16,25 +16,31 @@ namespace BackendApp.Services.Implements
 
         public void AddFavorite(FavoriteDto input)
         {
-            _dbContext.Favorites.Add(new Favorite
-            {
-                UserId = input.UserId,
-                ItemId = input.ItemId,
-                IsFavorite = true,
-            });
+            var query = _dbContext.Favorites.FirstOrDefault(f => f.UserId == input.UserId && f.ItemId == input.ItemId);
+            if (query == null) {
+                _dbContext.Favorites.Add(new Favorite
+                {
+                    UserId = input.UserId,
+                    ItemId = input.ItemId,
+                    IsFavorite = true,
+                });
+            } else {
+                query.IsFavorite = !query.IsFavorite;
+            }
+            
             _dbContext.SaveChanges();
         }
 
         public void DeleteFavorite(int id)
         {
-            var query = _dbContext.Favorites.Where(i => i.Id == id);
+            var query = _dbContext.Favorites.Where(i => i.UserId == id);
             if (query == null)
             {
-                throw new Exception("Không tìm thấy thông tin sản phẩm");
+                throw new Exception("Không tìm thấy thông tin người dùng");
             }
             foreach (var item in query)
             {
-            _dbContext.Favorites.Remove(item);
+                _dbContext.Favorites.Remove(item);
 
             }
             _dbContext.SaveChanges();
