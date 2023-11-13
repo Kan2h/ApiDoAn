@@ -10,5 +10,6 @@ namespace BackendApp.Services.Interfaces
         void UpdateFavorite(FavoriteDto input);
         void DeleteFavorite(int id);
         List<FavoriteItemDto> GetAllFavorite(int id);
+        void DeleteFavoriteById(FavoriteDto input);
     }
 }

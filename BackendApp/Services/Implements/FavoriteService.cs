@@ -80,7 +80,17 @@ namespace BackendApp.Services.Implements
             }
             var result = query.ToList();
             return result;
+        }
 
+        public void DeleteFavoriteById(FavoriteDto input)
+        {
+            var query = _dbContext.Favorites.FirstOrDefault(i => i.UserId == input.UserId && i.ItemId == input.ItemId);
+            if (query == null)
+            {
+                throw new Exception("Không tìm thấy thông tin");
+            }
+            _dbContext.Favorites.Remove(query);
+            _dbContext.SaveChanges();
         }
     }
 }

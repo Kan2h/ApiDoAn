@@ -61,6 +61,20 @@ namespace BackendApp.Controllers
             }
         }
 
+        [HttpDelete("delete2")]
+        public IActionResult Delete2([FromQuery] FavoriteDto input)
+        {
+            try
+            {
+                _favoriteService.DeleteFavoriteById(input);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new { message = e.Message });
+            }
+        }
+
         [HttpGet("get-all")]
         public IActionResult GetAll(int id)
         {
