@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public string OrderId { get; set; }
+        public string OrderCode { get; set; }
     }
 }

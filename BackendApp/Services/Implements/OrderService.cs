@@ -13,7 +13,7 @@ namespace BackendApp.Services.Implements
         }
         public void DeleteOrderById(string orderId)
         {
-            var order = _dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
+            var order = _dbContext.Orders.FirstOrDefault(o => o.OrderCode == orderId);
             if (order == null)
             {
                 throw new Exception("Không tìm thấy thông tin hóa đơn");
@@ -39,7 +39,7 @@ namespace BackendApp.Services.Implements
                 }
                 var item = from o in _dbContext.OrderDetails
                            join i in _dbContext.Items on o.ItemId equals i.Id
-                           where o.OrderId == input.OrderId
+                           where o.OrderCode == input.OrderCode
                            select new OrderItemDto
                            {
                                Id = i.Id,
@@ -58,7 +58,7 @@ namespace BackendApp.Services.Implements
 
                 result.Add(new OrderDetailDto
                 {
-                    OrderId = input.OrderId,
+                    OrderId = input.OrderCode,
                     User = user,
                     Items = item.ToList(),
                     Totals = total,
@@ -70,7 +70,7 @@ namespace BackendApp.Services.Implements
 
         public OrderDetailDto GetOrderById(string orderId)
         {
-            var order = _dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
+            var order = _dbContext.Orders.FirstOrDefault(o => o.OrderCode == orderId);
             if (order == null)
             {
                 throw new Exception("Không tìm thấy thông tin hóa đơn");
@@ -84,7 +84,7 @@ namespace BackendApp.Services.Implements
             }
             var item = from o in _dbContext.OrderDetails
                        join i in _dbContext.Items on o.ItemId equals i.Id
-                       where o.OrderId == order.OrderId
+                       where o.OrderCode == order.OrderCode
                        select new OrderItemDto
                        {
                            Id = i.Id,
@@ -132,7 +132,7 @@ namespace BackendApp.Services.Implements
             {
                 var item = from o in _dbContext.OrderDetails
                            join i in _dbContext.Items on o.ItemId equals i.Id
-                           where o.OrderId == input.OrderId
+                           where o.OrderCode == input.OrderCode
                            select new OrderItemDto
                            {
                                Id = i.Id,
@@ -152,7 +152,7 @@ namespace BackendApp.Services.Implements
 
                 result.Add(new OrderDetailDto
                 {
-                    OrderId = input.OrderId,
+                    OrderId = input.OrderCode,
                     User = user,
                     Items = item.ToList(),
                     Totals = total,

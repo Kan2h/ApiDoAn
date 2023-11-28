@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231026072530_InitialCreate")]
+    [Migration("20231128073912_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -108,7 +108,7 @@ namespace BackendApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("OrderId")
+                    b.Property<string>("OrderCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -131,7 +131,7 @@ namespace BackendApp.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrderId")
+                    b.Property<string>("OrderCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

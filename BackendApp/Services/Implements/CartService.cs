@@ -129,13 +129,13 @@ namespace BackendApp.Services.Implements
             var query = _dbContext.Carts.Where(c => c.UserId == id).ToList();
             
             var str = RandStr();
-            var findId = _dbContext.Orders.FirstOrDefault(o => o.OrderId == str);
+            var findId = _dbContext.Orders.FirstOrDefault(o => o.OrderCode == str);
             bool isFound = false;
 
             while (!isFound)
             {
                 str = RandStr();
-                findId = _dbContext.Orders.FirstOrDefault(o => o.OrderId == str);
+                findId = _dbContext.Orders.FirstOrDefault(o => o.OrderCode == str);
                 if (findId == null)
                 {
                     isFound = true;
@@ -145,13 +145,13 @@ namespace BackendApp.Services.Implements
             _dbContext.Orders.Add(new Order
             {
                 UserId = id,
-                OrderId = str,
+                OrderCode = str,
             });
             foreach (var item in query)
             {
                 _dbContext.OrderDetails.Add(new OrderDetail
                 {
-                    OrderId = str,
+                    OrderCode = str,
                     ItemId = item.ItemId,
                     Quantity = item.Quantity
                 });
